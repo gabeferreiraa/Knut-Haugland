@@ -12,9 +12,7 @@ export default function HeroVideo({ playbackId }: HeroVideoProps) {
     <section>
       <MuxPlayer
         playbackId={playbackId}
-        autoPlay="muted"
         loop
-        muted
         playsInline
         className={"w-full h-auto"}
         style={{
