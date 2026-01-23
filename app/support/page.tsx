@@ -4,30 +4,29 @@ import Link from "next/link";
 
 export default function SupportPage() {
   return (
-    <main className="min-h-screen bg-white text-black">
+    <main className="min-h-screen bg-background ">
       {/* Top nav */}
-      <header className="px-4 sm:px-8 py-6">
+      <header className="px-4 sm:px-8 py-6 text-white">
         <nav className="mx-auto flex w-full max-w-6xl items-center justify-between">
           <Link
             href="/"
-            className="text-sm font-medium text-black/60 hover:text-black"
+            className="text-sm font-medium text-foreground"
           >
             Home
           </Link>
 
-          <span className="text-sm font-medium text-black/80">Support</span>
         </nav>
       </header>
 
       <section className="px-4 sm:px-8 pb-16">
         <div className="mx-auto w-full max-w-6xl">
           {/* Full-width statement */}
-          <div className="border border-black/10 bg-white px-6 sm:px-10 py-8">
-            <h1 className="text-base sm:text-lg font-semibold tracking-tight text-black/90">
+          <div className=" bg-background text-white px-6 sm:px-10 py-8">
+            <h1 className="text-base sm:text-lg font-semibold tracking-tight text-foreground">
               Project Statement
             </h1>
 
-            <div className="mt-5 space-y-5 text-sm leading-7 text-black/75">
+            <div className="mt-5 space-y-5 text-sm leading-7 tracking-normal text-white/85">
               <p>
                 American cousins Kip Prestholdt and Jeremy Prestholdt set out to
                 tell the story of their relative, Knut Haugland — a man who helped
@@ -89,7 +88,7 @@ export default function SupportPage() {
                 contact information below. We would love to connect.
               </p>
 
-              <p className="pt-2 text-black/85">
+              <p className="pt-2 text-white/85">
                 With sincere thanks,
                 <br />
                 <span className="font-medium">Kip &amp; Jeremy Prestholdt</span>
@@ -98,8 +97,8 @@ export default function SupportPage() {
           </div>
 
           <div className="mt-10 grid gap-8 lg:grid-cols-2 lg:items-stretch">
-            <div className="border border-black/10 bg-black/5 p-4">
-              <div className="aspect-[16/10] w-full border border-black/10 bg-black/10">
+            <div className="  p-4">
+              <div className=" w-full bg-cover">
               <Image 
               src={"/images/img002.jpeg"}
               height={400}

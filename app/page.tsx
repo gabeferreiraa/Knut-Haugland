@@ -3,41 +3,45 @@ import Link from "next/link";
 
 export default function HomePage() {
   return (
-    <main className="min-h-screen bg-white text-black">
+    <main className="h-screen bg-background text-white overflow-hidden">
       {/* Top nav */}
       <header className="px-4 sm:px-8 py-6">
         <nav className="mx-auto flex w-full max-w-6xl items-center justify-between">
           <Link
             href="/"
-            className="text-sm font-medium text-black/60 hover:text-black"
+            className="text-sm font-medium text-white hover:text-white"
           >
             Home
           </Link>
 
-          <Link
+          {/* <Link
             href="/support"
-            className="text-sm font-medium text-black/60 hover:text-black"
+            className="text-sm font-medium text-white hover:text-white"
           >
             Support
-          </Link>
+          </Link> */}
         </nav>
       </header>
 
       {/* Content */}
       <section className="px-4 sm:px-8 pb-16">
-        <div className="mx-auto w-full max-w-6xl">
+        <div className="mx-auto w-full max-w-6xl mt-10">
           <h1 className="text-center text-2xl sm:text-3xl font-semibold tracking-tight">
-            Movie Title
+            Agent 7
           </h1>
 
           {/* Video area */}
           <div className="mt-8 flex justify-center">
             <div className="w-full max-w-4xl">
               <div className="aspect-video w-full rounded-none border border-black/10 bg-black/10">
-                {/* Replace this block with your <video> or embed */}
-                <div className="flex h-full w-full items-center justify-center text-xs font-medium text-black/50">
-                  VIDEO
-                </div>
+                <video
+                  src="/video/agent-7-first-pass.mp4"
+                  autoPlay
+                  loop
+                  playsInline
+                  controls={true}
+                  style={{ width: "100%", height: "auto", borderRadius: 16 }}
+                />
               </div>
             </div>
           </div>
@@ -46,9 +50,9 @@ export default function HomePage() {
           <div className="mt-10 flex justify-center">
             <Link
               href="/support"
-              className="rounded-full bg-black/10 px-6 py-3 text-sm font-medium text-black/70 hover:bg-black/15 hover:text-black"
+              className="rounded-full bg-black/10 px-6 py-3 text-sm font-medium text-white "
             >
-              Support this project
+              Interested
             </Link>
           </div>
         </div>
