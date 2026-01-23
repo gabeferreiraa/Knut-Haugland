@@ -9,7 +9,7 @@ interface HeroVideoProps {
 
 export default function HeroVideo({ playbackId }: HeroVideoProps) {
   return (
-    <section className={""}>
+    <section>
       <MuxPlayer
         playbackId={playbackId}
         autoPlay="muted"
