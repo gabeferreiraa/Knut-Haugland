@@ -1,0 +1,26 @@
+'use client';
+
+import MuxPlayer from '@mux/mux-player-react';
+
+
+interface HeroVideoProps {
+  playbackId: string;
+}
+
+export default function HeroVideo({ playbackId }: HeroVideoProps) {
+  return (
+    <section className={""}>
+      <MuxPlayer
+        playbackId={playbackId}
+        autoPlay="muted"
+        loop
+        muted
+        playsInline
+        className={"w-full h-auto"}
+        style={{
+          '--controls': '',
+        }}
+      />
+    </section>
+  );
+}

@@ -1,4 +1,5 @@
-// app/page.tsx
+'use client'
+import HeroVideo from "@/components/Player";
 import Link from "next/link";
 
 export default function HomePage() {
@@ -25,7 +26,7 @@ export default function HomePage() {
 
       {/* Content */}
       <section className="px-4 sm:px-8 pb-16">
-        <div className="mx-auto w-full max-w-6xl mt-10">
+        <div className="mx-auto w-full max-w-6xl mt-5">
           <h1 className="text-center text-2xl sm:text-3xl font-semibold tracking-tight">
             Agent 7
           </h1>
@@ -33,14 +34,9 @@ export default function HomePage() {
           {/* Video area */}
           <div className="mt-8 flex justify-center">
             <div className="w-full max-w-4xl">
-              <div className="aspect-video w-full rounded-none border border-black/10 bg-black/10">
-                <video
-                  src="/video/agent-7-first-pass.mp4"
-                  autoPlay
-                  loop
-                  playsInline
-                  controls={true}
-                  style={{ width: "100%", height: "auto", borderRadius: 16 }}
+              <div className=" aspect-auto w-full rounded-none ">
+                <HeroVideo 
+                playbackId="5nLPTUMSO2pBihFvUMVvj00dUPv2ATTzFnE7lEJmsc44"
                 />
               </div>
             </div>
