@@ -4,23 +4,80 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { addUser, UserFormValues } from "@/lib/supabase";
+import Toast from "@/components/ui/Toast";
+
 
 export default function SupportPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [toastOpen, setToastOpen] = useState(false);
+  const onSubmit = async (values: UserFormValues) => {
+  try {
+    const created = await addUser(values);
+    console.log("created user:", created.id);
+  } catch (err) {
+    console.error(err);
+  }
+};
+const [form, setForm] = useState<UserFormValues>({
+  firstName: "",
+  lastName: "",
+  title: "",
+  company: "",
+  email: "",
+  phone: "",
+  address: {
+    address: "",
+    state: "",
+    postalCode: ""
+  },
+});
+
+const updateField = (name: string, value: string) => {
+  // handle nested address.*
+  if (name.startsWith("address.")) {
+    const key = name.replace("address.", "") as keyof UserFormValues["address"];
+    setForm((prev) => ({
+      ...prev,
+      address: { ...prev.address, [key]: value },
+    }));
+    return;
+  }
+
+  // handle top-level fields
+  setForm((prev) => ({ ...prev, [name]: value } as UserFormValues));
+};
 
   return (
     <main className="min-h-screen bg-white">
       {/* Top nav */}
-      <header className="px-4 sm:px-8 py-6">
-        <nav className="mx-auto flex w-full max-w-6xl items-center justify-between">
-          <Link
-            href="/"
-            className="text-sm font-medium text-black hover:text-black/70"
-          >
-            Home
-          </Link>
-        </nav>
-      </header>
+      <header className="px-4 sm:px-8 py-3">
+  <nav className="mx-auto grid w-full max-w-6xl grid-cols-3 items-center">
+    {/* Left */}
+    <div className="justify-self-start">
+      <Link
+        href="/"
+        className="text-lg font-medium text-black hover:text-black/70"
+      >
+        Home
+      </Link>
+    </div>
+
+    {/* Center */}
+    <div className="justify-self-center min-h-[100]">
+      <Image
+        src="/images/Agent7Logo.png"
+        width={200}
+        height={100}
+        alt="Agent 7 logo"
+        hidden
+      />
+    </div>
+
+    {/* Right spacer (keeps true centering) */}
+    <div />
+  </nav>
+</header>
 
       <section className="px-4 sm:px-8 pb-16">
         <div className="mx-auto w-full max-w-6xl">
@@ -68,9 +125,10 @@ export default function SupportPage() {
                 src={"/images/img002.jpeg"}
                 height={800}
                 width={800}
-                alt="Knut Haugland"
+                alt="Kip Prestholdt (12) standing next to Knut Haugland 1984"
                 className="w-full h-auto"
               />
+              <p className="text-sm text-black italic mt-2">Kip Prestholdt (12) standing next to Knut Haugland 1984</p>
             </div>
             
             {/* CTA and contact info on the right */}
@@ -116,62 +174,94 @@ export default function SupportPage() {
       </section>
 
       {/* Modal */}
-      {isModalOpen && (
-        <div 
-          className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
-          onClick={() => setIsModalOpen(false)}
-        >
-          <div 
-            className="bg-white rounded-lg shadow-2xl w-full max-w-3xl"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="p-6">
-              <div className="flex justify-between items-start mb-4">
-                <h2 className="text-lg font-semibold text-black/90">
-                  Continue the conversation
-                </h2>
-                <button
-                  onClick={() => setIsModalOpen(false)}
-                  className="text-black/40 hover:text-black text-2xl leading-none"
-                >
-                  ×
-                </button>
-              </div>
-              
-              <p className="text-xs leading-5 text-black/60 mb-6">
-                Leave your contact information and we'll follow up with the film package and next steps.
-              </p>
+{isModalOpen && (
+  <div
+    className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
+    onClick={() => setIsModalOpen(false)}
+  >
+    {/* Modal panel (THIS was missing) */}
+    <div
+      className="bg-white rounded-lg shadow-2xl w-full max-w-3xl p-6"
+      onClick={(e) => e.stopPropagation()}
+    >
+      <form
+        onSubmit={async (e) => {
+          e.preventDefault();
+          try {
+                      const res = await fetch("/api/lead", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(form),
+          });
 
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                <Field label="First Name" name="firstName" />
-                <Field label="Last Name" name="lastName" />
-                <Field label="Title" name="title" />
-                <Field label="Company/Organization" name="company" fullWidth />
-                <Field label="Email" name="email" type="email" fullWidth />
-                <Field label="Phone Number" name="phone" type="tel" />
-                <Field label="Address" name="address" colSpan={2} />
-                <Field label="State" name="state" />
-                <Field label="Zip" name="zip" />
-              </div>
+          const text = await res.text(); // <-- read raw first
 
-              <div className="mt-6 flex justify-end gap-3">
-                <button
-                  onClick={() => setIsModalOpen(false)}
-                  className="rounded-md bg-black/10 px-5 py-2 text-sm font-medium text-black hover:bg-black/20 transition-colors"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="button"
-                  className="rounded-md bg-black px-5 py-2 text-sm font-medium text-white hover:bg-black/90 transition-colors"
-                >
-                  Submit
-                </button>
-              </div>
-            </div>
-          </div>
+          let json: any = null;
+          try {
+            json = text ? JSON.parse(text) : null;
+          } catch {
+            // not JSON (likely HTML error page)
+          }
+
+          if (!res.ok) {
+            console.error("API error status:", res.status);
+            console.error("API raw response:", text);
+            throw new Error(json?.error ?? `Request failed (${res.status})`);
+          }
+
+          if (!json) {
+            console.error("API returned empty body:", text);
+            throw new Error("Server returned no JSON.");
+          }
+
+          console.log("created user:", json.user?.id);
+          setIsModalOpen(false);
+          setToastOpen(true);
+
+          } catch (err) {
+            console.error(err);
+          }
+        }}
+      >
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <Field label="First Name" name="firstName" value={form.firstName} onChange={updateField} />
+          <Field label="Last Name" name="lastName" value={form.lastName} onChange={updateField} />
+          <Field label="Title" name="title" value={form.title} onChange={updateField} />
+
+          <Field label="Company/Organization" name="company" fullWidth value={form.company} onChange={updateField} />
+          <Field label="Email" name="email" type="email" fullWidth value={form.email} onChange={updateField} />
+          <Field label="Phone Number" name="phone" type="tel" value={form.phone} onChange={updateField} />
+
+          {/* Address fields (FLAT, as requested) */}
+          <Field label="Address" name="address.address" colSpan={2} value={form.address.address} onChange={updateField} />
+          <Field label="State" name="address.state" value={form.address.state} onChange={updateField} />
+          <Field label="Zip" name="address.postalCode" value={form.address.postalCode} onChange={updateField} />
         </div>
-      )}
+
+        <div className="mt-6 flex justify-end gap-3">
+          <button
+            type="button"
+            onClick={() => setIsModalOpen(false)}
+            className="rounded-md bg-black/10 px-5 py-2 text-sm font-medium text-black hover:bg-black/20 transition-colors"
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            className="rounded-md bg-black px-5 py-2 text-sm font-medium text-white hover:bg-black/90 transition-colors"
+          >
+            Submit
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+)}
+<Toast
+  open={toastOpen}
+  onClose={() => setToastOpen(false)}
+  message="Form submitted successfully"
+/>
     </main>
   );
 }
@@ -182,21 +272,27 @@ function Field({
   type = "text",
   fullWidth = false,
   colSpan = 1,
+  value,
+  onChange,
 }: {
   label: string;
   name: string;
   type?: string;
   fullWidth?: boolean;
   colSpan?: number;
+  value: string;
+  onChange: (name: string, value: string) => void;
 }) {
-  const spanClass = fullWidth ? 'sm:col-span-3' : colSpan === 2 ? 'sm:col-span-2' : '';
-  
+  const spanClass = fullWidth ? "sm:col-span-3" : colSpan === 2 ? "sm:col-span-2" : "";
+
   return (
     <label className={`block ${spanClass}`}>
       <span className="block text-xs font-medium text-black/60">{label}</span>
       <input
         name={name}
         type={type}
+        value={value}
+        onChange={(e) => onChange(name, e.target.value)}
         className="mt-1.5 w-full rounded-md border border-black/10 bg-black/5 px-3 py-2 text-sm text-black outline-none focus:border-black/30 focus:bg-white"
       />
     </label>
