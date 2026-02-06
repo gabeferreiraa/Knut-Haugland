@@ -6,7 +6,7 @@ export async function POST(req: Request) {
   try {
     const values = await req.json();
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+    const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
     const supabase = createClient(
       supabaseUrl,
     supabaseAnonKey
