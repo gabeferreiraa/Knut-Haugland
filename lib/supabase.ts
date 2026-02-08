@@ -18,10 +18,10 @@ export interface UserFormValues {
   company: string;
   address: AddressInput;
 }
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+const supabaseUrl = "https://mplaommlwwwgsmtzxdni.supabase.co";
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
 
-export const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!);
+export const supabase = createClient("https://mplaommlwwwgsmtzxdni.supabase.co", process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!);
 
 if (!supabaseUrl || !supabaseAnonKey) {
     console.error(
