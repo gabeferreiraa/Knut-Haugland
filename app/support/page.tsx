@@ -175,7 +175,7 @@ export default function SupportPage() {
       {/* Modal */}
       {isModalOpen && (
         <div
-          className="fixed inset-0 bg-black/50 z-50 overflow-y-auto"
+          className="fixed inset-0 bg-black/50 z-50 overflow-y-auto overflow-x-hidden"
           onClick={() => !isSubmitting && setIsModalOpen(false)}
         >
           <div className="min-h-screen px-4 py-8 flex items-center justify-center">
@@ -314,7 +314,10 @@ function Field({
 
   return (
     <label className={`block ${spanClass}`}>
-      <span className="block text-xs font-medium text-black/60 mb-1">{label}</span>
+      <span className="block text-xs font-medium text-black/60 mb-1">
+        {label}
+        {required && <span className="text-red-500 ml-1">*</span>}
+      </span>
       <input
         name={name}
         type={type}
