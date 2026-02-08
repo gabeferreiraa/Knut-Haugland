@@ -186,7 +186,7 @@ const updateField = (name: string, value: string) => {
       {/* Modal */}
 {isModalOpen && (
   <div
-    className="fixed overflow-y-auto inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
+    className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
     onClick={() => setIsModalOpen(false)}
   >
     {/* Modal panel (THIS was missing) */}
