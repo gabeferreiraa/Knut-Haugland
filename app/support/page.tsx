@@ -3,9 +3,22 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { addUser, UserFormValues } from "@/lib/supabase";
+import { addUser } from "@/lib/supabase";
 import Toast from "@/components/ui/Toast";
 
+export interface UserFormValues {
+  firstName: string;
+  lastName: string;
+  title: string;
+  email: string;
+  phone: string;
+  company: string;
+  address: {
+    address: string;
+    state: string;
+    postalCode: string;
+  };
+}
 
 export default function SupportPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -33,7 +46,6 @@ const [form, setForm] = useState<UserFormValues>({
 });
 
 const updateField = (name: string, value: string) => {
-  // handle nested address.*
   if (name.startsWith("address.")) {
     const key = name.replace("address.", "") as keyof UserFormValues["address"];
     setForm((prev) => ({

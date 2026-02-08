@@ -40,7 +40,9 @@ function getSupabase() {
   return supabaseInstance;
 }
 
-export const supabase = getSupabase();
+// REMOVE THIS LINE:
+// export const supabase = getSupabase();
+
 export type UserRow = {
   id: string;
   created_at: string;
@@ -50,11 +52,10 @@ export type UserRow = {
   email: string;
   phone: string | null;
   company: string | null;
-  address: unknown; // jsonb (you can tighten this to AddressInput if you want)
+  address: unknown;
 };
 
 export async function addUser(values: UserFormValues) {
-
   const payload = {
     first_name: values.firstName,
     last_name: values.lastName,
@@ -62,7 +63,7 @@ export async function addUser(values: UserFormValues) {
     email: values.email,
     phone: values.phone,
     company: values.company,
-    address: values.address, // stored as jsonb
+    address: values.address,
   };
 
   const { data, error } = await getSupabase()
@@ -72,12 +73,8 @@ export async function addUser(values: UserFormValues) {
     .single();
 
   if (error) {
-    // Throw so your UI can catch + show a toast, etc.
     throw new Error(error.message);
   }
 
   return data as UserRow;
 }
-
-
-
