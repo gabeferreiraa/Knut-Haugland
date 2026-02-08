@@ -1,4 +1,3 @@
-
 import { createClient } from "@supabase/supabase-js";
 
 export interface AddressInput {
@@ -18,18 +17,30 @@ export interface UserFormValues {
   company: string;
   address: AddressInput;
 }
+
 const supabaseUrl = "https://mplaommlwwwgsmtzxdni.supabase.co";
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
 
-export const supabase = createClient("https://mplaommlwwwgsmtzxdni.supabase.co", process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!);
+// Lazy initialization - only create when actually called
+let supabaseInstance: ReturnType<typeof createClient> | null = null;
 
-if (!supabaseUrl || !supabaseAnonKey) {
-    console.error(
-    "Missing Supabase environment variables!\n" +
+function getSupabase() {
+  if (!supabaseInstance) {
+    const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+    
+    if (!supabaseUrl || !supabaseAnonKey) {
+      throw new Error(
+        "Missing Supabase environment variables!\n" +
         `URL: ${supabaseUrl ?? "missing"}\n` +
         `Key: ${supabaseAnonKey ? "present (hidden)" : "missing"}`
-    );
+      );
+    }
+    
+    supabaseInstance = createClient(supabaseUrl, supabaseAnonKey);
+  }
+  return supabaseInstance;
 }
+
+export const supabase = getSupabase();
 export type UserRow = {
   id: string;
   created_at: string;
@@ -54,9 +65,9 @@ export async function addUser(values: UserFormValues) {
     address: values.address, // stored as jsonb
   };
 
-  const { data, error } = await supabase
+  const { data, error } = await getSupabase()
     .from("users")
-    .insert(payload)
+    .insert(payload as any)
     .select("*")
     .single();
 
