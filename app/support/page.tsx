@@ -1,4 +1,3 @@
-// app/support/page.tsx
 'use client';
 
 import Image from "next/image";
@@ -90,11 +89,16 @@ const updateField = (name: string, value: string) => {
               </p>
 
               <p>
-                Knut Haugland was hardworking, humble, and deeply private. He avoided the spotlight, rarely gave interviews, and had little interest in telling his own story. As a result, for decades his extraordinary life remained largely unknown and unacknowledged outside of Norway. It wasn't until 2009 — just one year before his death — that Norwegian journalist Svein Sæter published Haugland's full story in his biography Operatøren. Even then, the story did not reach a global audience.
+                Knut Haugland was hardworking, humble, and deeply private. He avoided the spotlight, rarely gave interviews, and had little interest in telling his own story. As a result, for decades his extraordinary life remained largely unknown and unacknowledged outside of Norway. It wasn't until 2009, just one year before his death, that Norwegian journalist Svein Sæter published Haugland's full story in his biography Operatøren. Even then, the story did not reach a global audience.
               </p>
 
               <p>
-                In 2025, filmmaker Kip Prestholdt read Operatøren for the first time. What he found was not just a remarkable life but also a story that demanded to be seen by a wider audience. He immediately reached out to his cousin Jeremy Prestholdt, a professor of history at the University of California, San Diego. Friends since childhood, Kip and Jeremy knew this was a journey they needed to take together.
+                In 2025, filmmaker {''}
+                    <Link href="https://www.imdb.com/name/nm2329650/" target="_blank" className="hover:text-black underline">
+                      Kip Prestholdt
+                    </Link> read Operatøren for the first time. What he found was not just a remarkable life but also a story that demanded to be seen by a wider audience. He immediately reached out to his cousin{''} <Link href="https://history.ucsd.edu/people/faculty/prestholdt.html" target="_blank" className="hover:text-black underline">
+                      Jeremy Prestholdt
+                    </Link>, a professor of history at the University of California, San Diego. Friends since childhood, Kip and Jeremy knew this was a journey they needed to take together.
               </p>
 
               <p>
@@ -156,14 +160,8 @@ const updateField = (name: string, value: string) => {
                 <div className="space-y-2 text-sm text-black/70">
                   <div className="flex items-center justify-center lg:justify-start gap-2">
                     <span className="font-medium">Email:</span>
-                    <a href="mailto:contact@example.com" className="hover:text-black underline">
-                      contact@example.com
-                    </a>
-                  </div>
-                  <div className="flex items-center justify-center lg:justify-start gap-2">
-                    <span className="font-medium">Phone:</span>
-                    <a href="tel:+1234567890" className="hover:text-black">
-                      (123) 456-7890
+                    <a href="mailto:kip@agent7film.com" className="hover:text-black underline">
+                      kip@agent7film.com
                     </a>
                   </div>
                 </div>
@@ -176,7 +174,7 @@ const updateField = (name: string, value: string) => {
       {/* Modal */}
 {isModalOpen && (
   <div
-    className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
+    className="fixed overflow-y-auto inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
     onClick={() => setIsModalOpen(false)}
   >
     {/* Modal panel (THIS was missing) */}
@@ -188,19 +186,18 @@ const updateField = (name: string, value: string) => {
         onSubmit={async (e) => {
           e.preventDefault();
           try {
-                      const res = await fetch("/api/lead", {
+            const res = await fetch("/api/lead", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(form),
           });
 
-          const text = await res.text(); // <-- read raw first
+          const text = await res.text(); 
 
           let json: any = null;
           try {
             json = text ? JSON.parse(text) : null;
           } catch {
-            // not JSON (likely HTML error page)
           }
 
           if (!res.ok) {
