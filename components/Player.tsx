@@ -11,7 +11,7 @@ export default function HeroVideo({ playbackId }: HeroVideoProps) {
     <section>
       <MuxPlayer
         playbackId={playbackId}
-        thumbnailTime={94}
+        poster='/public/images/thumbnail.jpeg'
         loop
         playsInline
         className={"w-full h-auto"}
