@@ -17,6 +17,7 @@ export default function HomePage() {
         Home
       </Link>
     </div>
+    
 
     {/* Center */}
     <div className="justify-self-center">
@@ -29,7 +30,14 @@ export default function HomePage() {
       />
     </div>
 
-    {/* Right spacer (keeps true centering) */}
+    <div className="justify-self-end">
+            <Link
+              href="/support"
+              className="rounded-full bg-black px-6 py-3 text-sm font-medium text-white hover:bg-black/90"
+            >
+              Interested
+            </Link>
+          </div>
     <div />
   </nav>
 </header>
@@ -50,14 +58,7 @@ export default function HomePage() {
           </div>
 
           {/* CTA */}
-          <div className="mt-6 flex justify-center">
-            <Link
-              href="/support"
-              className="rounded-full bg-black px-6 py-3 text-sm font-medium text-white hover:bg-black/90"
-            >
-              Interested
-            </Link>
-          </div>
+          
         </div>
       </section>
     </main>
