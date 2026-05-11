@@ -14,16 +14,7 @@ export default function PitchDeckPage() {
 
       <section className="px-4 sm:px-8 pb-16">
         <div className="mx-auto w-full max-w-5xl">
-          <div className="flex items-center justify-between mt-8 mb-6">
-            <h1 className="text-2xl font-bold text-black">{t.pitchDeckTitle}</h1>
-            <a
-              href="/files/agent7-pitch-deck.pdf"
-              download
-              className="rounded-md bg-black px-4 py-2 text-sm font-medium text-white hover:bg-black/90 transition-colors"
-            >
-              {t.downloadPdf}
-            </a>
-          </div>
+          <div className="mt-8" />
 
           <div className="w-full rounded-lg overflow-hidden border border-black/10">
             <iframe
@@ -33,6 +24,13 @@ export default function PitchDeckPage() {
               title="Agent 7 Pitch Deck"
             />
           </div>
+          <a
+            href="/files/agent7-pitch-deck.pdf"
+            download
+            className="inline-block mt-3 text-sm font-medium text-black underline underline-offset-2 hover:text-black/70"
+          >
+            {t.downloadPdf}
+          </a>
         </div>
       </section>
     </main>

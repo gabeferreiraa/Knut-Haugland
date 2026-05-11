@@ -14,9 +14,7 @@ export default function EndorsementsPage() {
 
       <section className="px-4 sm:px-8 pb-16">
         <div className="mx-auto w-full max-w-4xl">
-          <h1 className="text-2xl font-bold text-black mt-8 mb-10">
-            {t.endorsementsTitle}
-          </h1>
+          <div className="mt-8 mb-10" />
 
           <div className="space-y-16">
             {/* Endorsement 1 — Kon-Tiki Museum (Liv Heyerdahl letter) */}

@@ -12,12 +12,12 @@ export default function Nav() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header className="px-4 sm:px-8 py-3">
+    <header className="px-4 sm:px-8 py-6">
       <nav className="mx-auto w-full max-w-6xl">
         {/* Desktop nav */}
-        <div className="hidden md:grid grid-cols-[1fr_auto_1fr] items-center gap-4">
-          {/* Left links */}
-          <div className="flex items-center gap-6">
+        <div className="hidden md:flex items-center relative">
+          {/* Centered links */}
+          <div className="flex items-center gap-6 mx-auto">
             <Link href="/" className="text-sm font-medium text-black hover:text-black/70">
               {t.home}
             </Link>
@@ -33,42 +33,45 @@ export default function Nav() {
             >
               {t.about}
             </Link>
+            <Link href="/investors" className="text-sm font-medium text-black hover:text-black/70">
+              {t.investors}
+            </Link>
           </div>
 
-          {/* Center logo */}
-          <div>
+          {/* Left: logo */}
+          <div className="absolute left-0">
             <Image
               src="/images/Agent7Logo.png"
-              width={200}
-              height={100}
+              width={120}
+              height={60}
               alt="Agent 7 logo"
               priority
             />
           </div>
 
           {/* Right: language toggle */}
-          <div className="flex items-center justify-end gap-1">
-            <button
-              onClick={() => setLanguage('en')}
-              className={`px-2 py-1 text-xs font-semibold rounded transition-colors ${
-                language === 'en'
-                  ? 'bg-black text-white'
-                  : 'text-black/60 hover:text-black'
-              }`}
-            >
-              ENG
-            </button>
-            <span className="text-black/30">|</span>
-            <button
-              onClick={() => setLanguage('no')}
-              className={`px-2 py-1 text-xs font-semibold rounded transition-colors ${
-                language === 'no'
-                  ? 'bg-black text-white'
-                  : 'text-black/60 hover:text-black'
-              }`}
-            >
-              NOR
-            </button>
+          <div className="absolute right-0 flex items-center gap-1">
+              <button
+                onClick={() => setLanguage('en')}
+                className={`px-2 py-1 text-xs font-semibold rounded transition-colors ${
+                  language === 'en'
+                    ? 'bg-black text-white'
+                    : 'text-black/60 hover:text-black'
+                }`}
+              >
+                ENG
+              </button>
+              <span className="text-black/30">|</span>
+              <button
+                onClick={() => setLanguage('no')}
+                className={`px-2 py-1 text-xs font-semibold rounded transition-colors ${
+                  language === 'no'
+                    ? 'bg-black text-white'
+                    : 'text-black/60 hover:text-black'
+                }`}
+              >
+                NOR
+              </button>
           </div>
         </div>
 
@@ -93,8 +96,8 @@ export default function Nav() {
             {/* Logo */}
             <Image
               src="/images/Agent7Logo.png"
-              width={150}
-              height={75}
+              width={100}
+              height={50}
               alt="Agent 7 logo"
               priority
             />
@@ -134,6 +137,9 @@ export default function Nav() {
               </Link>
               <Link href="/support" onClick={() => setMenuOpen(false)} className="text-sm font-medium text-black">
                 {t.about}
+              </Link>
+              <Link href="/investors" onClick={() => setMenuOpen(false)} className="text-sm font-medium text-black">
+                {t.investors}
               </Link>
             </div>
           )}

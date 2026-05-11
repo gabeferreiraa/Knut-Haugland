@@ -61,6 +61,33 @@ const translations = {
     // Pitch deck page
     pitchDeckTitle: 'Pitch Deck',
     downloadPdf: 'Download PDF',
+
+    // Investors page
+    investors: 'Investors',
+    investorsPasswordLabel: 'Enter Password',
+    investorsPasswordPlaceholder: 'Password',
+    investorsSubmit: 'Submit',
+    investorsIncorrect: 'Incorrect password. Please try again.',
+    investorsMessage: "If you're interested in investing in this film, please email kip@agent7film.com to request a password, which will grant you full access to the script, budget, and market potential materials.",
+    investorsWelcome: 'Welcome, Investor',
+    investorsContent: 'Thank you for your interest in Agent 7. Below you will find materials related to the script, budget, and market potential.',
+
+    // Investor Dashboard
+    investorsBudgetTitle: 'Production Budget Breakdown',
+    investorsBudgetDesc: 'Estimated allocation of the $4.5M production budget across major categories.',
+    investorsRevenueTitle: 'Revenue Projections',
+    investorsRevenueDesc: 'Projected vs. conservative revenue estimates across distribution channels.',
+    investorsTrendsTitle: 'Documentary Market Trends',
+    investorsTrendsDesc: 'Year-over-year growth in documentary audience, streaming revenue, and theatrical revenue (indexed to 2019).',
+    investorsCompsTitle: 'Comparable Films Performance',
+    investorsCompsDesc: 'Budget vs. gross revenue for comparable documentary and docudrama films, illustrating ROI potential.',
+    investorsBudget: 'Budget',
+    investorsGross: 'Gross Revenue',
+    investorsProjected: 'Projected',
+    investorsConservative: 'Conservative',
+    investorsAudience: 'Audience Growth',
+    investorsStreamingRev: 'Streaming Revenue',
+    investorsTheatricalRev: 'Theatrical Revenue',
   },
   no: {
     // Nav
@@ -124,6 +151,33 @@ const translations = {
     // Pitch deck page
     pitchDeckTitle: 'Pitch Deck',
     downloadPdf: 'Last ned PDF',
+
+    // Investors page
+    investors: 'Investorer',
+    investorsPasswordLabel: 'Skriv inn passord',
+    investorsPasswordPlaceholder: 'Passord',
+    investorsSubmit: 'Send inn',
+    investorsIncorrect: 'Feil passord. Vennligst prøv igjen.',
+    investorsMessage: 'Hvis du er interessert i å investere i denne filmen, vennligst send en e-post til kip@agent7film.com for å be om et passord, som gir deg full tilgang til manus, budsjett og markedspotensiale.',
+    investorsWelcome: 'Velkommen, Investor',
+    investorsContent: 'Takk for din interesse for Agent 7. Nedenfor finner du materialer relatert til manus, budsjett og markedspotensiale.',
+
+    // Investor Dashboard
+    investorsBudgetTitle: 'Produksjonsbudsjett',
+    investorsBudgetDesc: 'Estimert fordeling av produksjonsbudsjettet på $4,5M på tvers av hovedkategorier.',
+    investorsRevenueTitle: 'Inntektsprognoser',
+    investorsRevenueDesc: 'Projiserte vs. konservative inntektsestimater på tvers av distribusjonskanaler.',
+    investorsTrendsTitle: 'Markedstrender for dokumentarfilm',
+    investorsTrendsDesc: 'Årlig vekst i dokumentarpublikum, strømmeinntekter og kinoinntekter (indeksert til 2019).',
+    investorsCompsTitle: 'Sammenlignbare filmer',
+    investorsCompsDesc: 'Budsjett vs. bruttoinntekter for sammenlignbare dokumentar- og dokudramafilmer, som illustrerer avkastningspotensial.',
+    investorsBudget: 'Budsjett',
+    investorsGross: 'Bruttoinntekt',
+    investorsProjected: 'Projisert',
+    investorsConservative: 'Konservativt',
+    investorsAudience: 'Publikumsvekst',
+    investorsStreamingRev: 'Strømmeinntekter',
+    investorsTheatricalRev: 'Kinoinntekter',
   },
 } as const;
 
