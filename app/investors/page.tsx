@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Nav from '@/components/Nav';
 import { useLanguage } from '@/lib/language-context';
 import translations from '@/lib/translations';
@@ -57,12 +57,23 @@ function formatDollar(value: number) {
 
 function Card({ title, description, children }: { title: string; description: string; children: React.ReactNode }) {
   return (
-    <div className="border border-black/10 rounded-lg p-6">
-      <h2 className="text-lg font-bold text-black mb-1">{title}</h2>
-      <p className="text-sm text-black/60 mb-6">{description}</p>
+    <div className="border border-black/10 rounded-lg p-4 sm:p-6">
+      <h2 className="text-base sm:text-lg font-bold text-black mb-1">{title}</h2>
+      <p className="text-xs sm:text-sm text-black/60 mb-4 sm:mb-6">{description}</p>
       {children}
     </div>
   );
+}
+
+function useIsMobile(breakpoint = 640) {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < breakpoint);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, [breakpoint]);
+  return isMobile;
 }
 
 export default function InvestorsPage() {
@@ -71,6 +82,7 @@ export default function InvestorsPage() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState(false);
   const [authenticated, setAuthenticated] = useState(false);
+  const isMobile = useIsMobile();
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -124,9 +136,9 @@ export default function InvestorsPage() {
             </p>
           </div>
         ) : (
-          <div className="mx-auto w-full max-w-6xl mt-16">
-            <div className="text-center mb-12">
-              <h1 className="text-2xl font-bold text-black mb-2">
+          <div className="mx-auto w-full max-w-6xl mt-8 sm:mt-16">
+            <div className="text-center mb-8 sm:mb-12">
+              <h1 className="text-xl sm:text-2xl font-bold text-black mb-2">
                 {t.investorsWelcome}
               </h1>
               <p className="text-sm text-black/70 leading-relaxed">
@@ -134,38 +146,41 @@ export default function InvestorsPage() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
               {/* Section 1 — Budget Breakdown (Pie) */}
               <Card title={t.investorsBudgetTitle} description={t.investorsBudgetDesc}>
-                <ResponsiveContainer width="100%" height={300}>
+                <ResponsiveContainer width="100%" height={isMobile ? 260 : 300}>
                   <PieChart>
                     <Pie
                       data={budgetData}
                       cx="50%"
                       cy="50%"
-                      outerRadius={100}
+                      outerRadius={isMobile ? 70 : 100}
                       dataKey="value"
-                      label={({ name, percent }: { name?: string; percent?: number }) => `${name ?? ''} ${((percent ?? 0) * 100).toFixed(0)}%`}
-                      labelLine={false}
+                      label={isMobile ? false : ({ name, percent }: { name?: string; percent?: number }) => `${name ?? ''} ${((percent ?? 0) * 100).toFixed(0)}%`}
+                      labelLine={!isMobile}
                     >
                       {budgetData.map((_, i) => (
                         <Cell key={i} fill={COLORS[i % COLORS.length]} />
                       ))}
                     </Pie>
                     <Tooltip formatter={(value) => formatDollar(Number(value))} />
+                    <Legend
+                      wrapperStyle={{ fontSize: isMobile ? 11 : 14 }}
+                    />
                   </PieChart>
                 </ResponsiveContainer>
               </Card>
 
               {/* Section 2 — Revenue Projections (Bar) */}
               <Card title={t.investorsRevenueTitle} description={t.investorsRevenueDesc}>
-                <ResponsiveContainer width="100%" height={300}>
-                  <BarChart data={revenueData}>
+                <ResponsiveContainer width="100%" height={isMobile ? 260 : 300}>
+                  <BarChart data={revenueData} margin={isMobile ? { left: -10, right: 5 } : undefined}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#e5e5e5" />
-                    <XAxis dataKey="name" tick={{ fontSize: 12 }} />
-                    <YAxis tickFormatter={formatDollar} tick={{ fontSize: 12 }} />
+                    <XAxis dataKey="name" tick={{ fontSize: isMobile ? 10 : 12 }} angle={isMobile ? -35 : 0} textAnchor={isMobile ? 'end' : 'middle'} height={isMobile ? 60 : 30} />
+                    <YAxis tickFormatter={formatDollar} tick={{ fontSize: isMobile ? 10 : 12 }} width={isMobile ? 45 : 60} />
                     <Tooltip formatter={(value) => formatDollar(Number(value))} />
-                    <Legend />
+                    <Legend wrapperStyle={{ fontSize: isMobile ? 11 : 14 }} />
                     <Bar dataKey="projected" name={t.investorsProjected} fill="#000000" />
                     <Bar dataKey="conservative" name={t.investorsConservative} fill="#a0a0a0" />
                   </BarChart>
@@ -173,16 +188,16 @@ export default function InvestorsPage() {
               </Card>
             </div>
 
-            <div className="grid grid-cols-1 gap-8 mt-8">
+            <div className="grid grid-cols-1 gap-6 sm:gap-8 mt-6 sm:mt-8">
               {/* Section 3 — Market Trends (Line) */}
               <Card title={t.investorsTrendsTitle} description={t.investorsTrendsDesc}>
-                <ResponsiveContainer width="100%" height={350}>
-                  <LineChart data={trendsData}>
+                <ResponsiveContainer width="100%" height={isMobile ? 260 : 350}>
+                  <LineChart data={trendsData} margin={isMobile ? { left: -10, right: 5 } : undefined}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#e5e5e5" />
-                    <XAxis dataKey="year" tick={{ fontSize: 12 }} />
-                    <YAxis tick={{ fontSize: 12 }} />
+                    <XAxis dataKey="year" tick={{ fontSize: isMobile ? 10 : 12 }} />
+                    <YAxis tick={{ fontSize: isMobile ? 10 : 12 }} width={isMobile ? 35 : 60} />
                     <Tooltip />
-                    <Legend />
+                    <Legend wrapperStyle={{ fontSize: isMobile ? 11 : 14 }} />
                     <Line type="monotone" dataKey="audience" name={t.investorsAudience} stroke="#000000" strokeWidth={2} />
                     <Line type="monotone" dataKey="streaming" name={t.investorsStreamingRev} stroke="#6b6b6b" strokeWidth={2} />
                     <Line type="monotone" dataKey="theatrical" name={t.investorsTheatricalRev} stroke="#b0b0b0" strokeWidth={2} />
@@ -192,13 +207,13 @@ export default function InvestorsPage() {
 
               {/* Section 4 — Comparable Films (Horizontal Bar) */}
               <Card title={t.investorsCompsTitle} description={t.investorsCompsDesc}>
-                <ResponsiveContainer width="100%" height={350}>
-                  <BarChart data={compsData} layout="vertical">
+                <ResponsiveContainer width="100%" height={isMobile ? 300 : 350}>
+                  <BarChart data={compsData} layout="vertical" margin={isMobile ? { left: 0, right: 5 } : undefined}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#e5e5e5" />
-                    <XAxis type="number" tickFormatter={formatDollar} tick={{ fontSize: 12 }} />
-                    <YAxis type="category" dataKey="name" tick={{ fontSize: 12 }} width={130} />
+                    <XAxis type="number" tickFormatter={formatDollar} tick={{ fontSize: isMobile ? 10 : 12 }} />
+                    <YAxis type="category" dataKey="name" tick={{ fontSize: isMobile ? 10 : 12 }} width={isMobile ? 90 : 130} />
                     <Tooltip formatter={(value) => formatDollar(Number(value))} />
-                    <Legend />
+                    <Legend wrapperStyle={{ fontSize: isMobile ? 11 : 14 }} />
                     <Bar dataKey="budget" name={t.investorsBudget} fill="#a0a0a0" />
                     <Bar dataKey="gross" name={t.investorsGross} fill="#000000" />
                   </BarChart>

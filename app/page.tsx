@@ -4,7 +4,7 @@ import Nav from "@/components/Nav";
 
 export default function HomePage() {
   return (
-    <main className="h-screen bg-white text-black overflow-hidden">
+    <main className="min-h-screen bg-white text-black">
       <Nav />
 
       {/* Content */}

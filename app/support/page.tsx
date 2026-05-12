@@ -161,9 +161,9 @@ export default function SupportPage() {
           className="fixed inset-0 bg-black/50 z-50 overflow-y-auto overflow-x-hidden"
           onClick={() => !isSubmitting && setIsModalOpen(false)}
         >
-          <div className="min-h-screen px-4 py-8 flex items-center justify-center">
+          <div className="min-h-screen px-3 sm:px-4 py-4 sm:py-8 flex items-start sm:items-center justify-center">
             <div
-              className="bg-white rounded-lg shadow-2xl w-full max-w-3xl p-6"
+              className="bg-white rounded-lg shadow-2xl w-full max-w-3xl p-4 sm:p-6"
               onClick={(e) => e.stopPropagation()}
             >
               <h2 className="text-xl font-semibold text-black mb-4">{t.getInTouch}</h2>

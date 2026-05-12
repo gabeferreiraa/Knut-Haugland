@@ -25,18 +25,38 @@ export default function EndorsementsPage() {
               <p className="text-sm text-black/60 mb-4">
                 {t.endorsement1.author}
               </p>
-              <div className="w-full border border-black/10 rounded overflow-hidden">
+              {/* PDF viewer — hidden on small screens */}
+              <div className="hidden sm:block w-full border border-black/10 rounded overflow-hidden">
                 <iframe
                   src="/files/agent7_letter.pdf"
                   className="w-full"
-                  style={{ height: '80vh', minHeight: '600px' }}
+                  style={{ height: '80vh', minHeight: '500px' }}
                   title={`${t.endorsement1.org} — ${t.endorsementLetterLabel}`}
                 />
               </div>
+
+              {/* Mobile fallback */}
+              <div className="sm:hidden flex flex-col items-center justify-center py-10 px-4 border border-black/10 rounded text-center">
+                <svg className="w-12 h-12 text-black/40 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 10v6m0 0l-3-3m3 3l3-3M3 17v3a2 2 0 002 2h14a2 2 0 002-2v-3" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M14 2H6a2 2 0 00-2 2v16m0 0h16" />
+                </svg>
+                <p className="text-sm text-black/70 mb-4">
+                  {t.endorsement1.org} — {t.endorsementLetterLabel}
+                </p>
+                <a
+                  href="/files/agent7_letter.pdf"
+                  download
+                  className="inline-block rounded-md bg-black px-6 py-3 text-sm font-medium text-white hover:bg-black/90 transition-colors"
+                >
+                  {t.downloadLetter}
+                </a>
+              </div>
+
               <a
                 href="/files/agent7_letter.pdf"
                 download
-                className="inline-block mt-3 text-sm font-medium text-black underline underline-offset-2 hover:text-black/70"
+                className="hidden sm:inline-block mt-3 text-sm font-medium text-black underline underline-offset-2 hover:text-black/70"
               >
                 {t.downloadLetter}
               </a>

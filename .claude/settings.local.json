@@ -6,7 +6,8 @@
       "Bash(npm install:*)",
       "Bash(npx npm@latest install:*)",
       "Bash(pnpm add:*)",
-      "Bash(pnpm run build:*)"
+      "Bash(pnpm run build:*)",
+      "Bash(grep:*)"
     ]
   }
 }
